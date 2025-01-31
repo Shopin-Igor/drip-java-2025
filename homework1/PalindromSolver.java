@@ -12,7 +12,7 @@ class PalindromSolver {
         if (isPalindrome(String.valueOf(number))) {
             return true;
         }
-        while (surrent_number >= 100) {
+        while (surrent_number >= 10) {
             String surrent_string = "";
             String surrent_number_to_string = String.valueOf(surrent_number);
             for (int i = 0; i <= surrent_number_to_string.length() - 2; i += 2) {
@@ -22,7 +22,7 @@ class PalindromSolver {
                 surrent_string += surrent_number_to_string.charAt(surrent_number_to_string.length() - 1);
             }
 
-            if (isPalindrome(surrent_string) && (!surrent_string.isEmpty())) {
+            if (isPalindrome(surrent_string) && (surrent_string.length() >= 2)) {
                 return true;
             }
             surrent_number = Integer.parseInt(surrent_string);
