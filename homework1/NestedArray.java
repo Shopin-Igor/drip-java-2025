@@ -1,5 +1,8 @@
 class NestedArray {
   public static boolean isNestable(int[] a1, int[] a2) {
+    if (a1.length == 0) {
+      return false;
+    }
     int min_a1 = Integer.MAX_VALUE;
     int max_a1 = Integer.MIN_VALUE;
     for (int i = 0; i < a1.length; ++i) {
@@ -12,7 +15,6 @@ class NestedArray {
       min_a2 = Math.min(min_a2, a2[i]);
       max_a2 = Math.max(max_a2, a2[i]);
     }
-
     return (min_a1 > min_a2 && max_a1 < max_a2);
   }
 }
