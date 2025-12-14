@@ -1,0 +1,34 @@
+version: '3.8'
+name: postgres
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=todo_user
+      - POSTGRES_PASSWORD=todo_pass
+      - POSTGRES_DB=tododb
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todo_user -d tododb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  init_user_postgres:
+    image: postgres:15-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    command: >
+      bash -c "PGPASSWORD=todo_pass psql -h postgres -U todo_user -d tododb -c 'ALTER ROLE todo_user SUPERUSER'"
+
+volumes:
+  postgres_data:
